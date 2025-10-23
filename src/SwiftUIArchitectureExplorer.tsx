@@ -1111,7 +1111,12 @@ struct ProductCatalogApp: App {
                   selectedFile === item.path ? 'bg-blue-50' : ''
                 }`}
                 style={{ paddingLeft: `${level * 16 + 32}px` }}
-                onClick={() => setSelectedFile(item.path)}
+                onClick={() => {
+                  setSelectedFile(item.path);
+                  if (isMobile) {
+                    setIsSidebarOpen(false);
+                  }
+                }}
               >
                 <FileCode size={16} className="text-gray-400" />
                 <span className="text-sm">{item.name}</span>
