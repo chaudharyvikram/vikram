@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, FileCode, Folder, Info } from 'lucide-react';
-import Header from './components/Header';
+import React, { useState, useEffect } from "react";
+import { ChevronRight, ChevronDown, Folder, FileCode, Info } from "lucide-react";
+import Header from "./components/Header";
 
 const SwiftUIArchitectureExplorer = () => {
   interface FileItem {
@@ -1153,19 +1153,61 @@ struct ProductCatalogApp: App {
     ]
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="w-full h-screen flex flex-col bg-gray-50">
       <Header />
       {/* Section Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-lg mt-16">
-        <h1 className="text-3xl font-bold mb-2">SwiftUI Clean Architecture Example</h1>
-        <p className="text-blue-100">Complete Product Catalog App with MVVM + Clean Architecture</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">SwiftUI Clean Architecture Example</h1>
+            <p className="text-blue-100 text-sm md:text-base">Complete Product Catalog App with MVVM + Clean Architecture</p>
+          </div>
+          {isMobile && (
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="p-2 rounded-md bg-white/10 hover:bg-white/20"
+            >
+              {isSidebarOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         {/* Sidebar - File Tree */}
-        <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
+        <div className={`${
+          isMobile 
+            ? `absolute z-10 top-0 bottom-0 transition-transform duration-300 ${
+                isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+              }`
+            : 'relative'
+        } w-full md:w-80 bg-white border-r border-gray-200 overflow-y-auto`}>
           <div className="p-4 border-b border-gray-200 bg-gray-50">
             <h2 className="font-semibold text-gray-700 flex items-center gap-2">
               <Folder size={18} className="text-blue-500" />
@@ -1181,9 +1223,9 @@ struct ProductCatalogApp: App {
         <div className="flex-1 flex flex-col overflow-hidden">
           {selectedFile ? (
             <>
-              <div className="bg-gray-100 border-b border-gray-200 px-4 py-2 text-sm font-mono flex items-center justify-between">
-                <span className="text-gray-700">{selectedFile}</span>
-                <div className="flex items-center gap-2">
+              <div className="bg-gray-100 border-b border-gray-200 px-2 md:px-4 py-2 text-xs md:text-sm font-mono flex items-center justify-between">
+                <span className="text-gray-700 truncate">{selectedFile}</span>
+                <div className="flex items-center gap-2 ml-2">
                   <button 
                     className="p-1 hover:bg-gray-200 rounded transition-colors" 
                     title="Copy code"
@@ -1207,9 +1249,9 @@ struct ProductCatalogApp: App {
                   </button>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto bg-white p-4">
-                <pre className="text-sm font-mono leading-relaxed">
-                  <code className="text-gray-800">
+              <div className="flex-1 overflow-y-auto bg-white p-2 md:p-4">
+                <pre className="text-xs md:text-sm font-mono leading-relaxed overflow-x-auto">
+                  <code className="text-gray-800 whitespace-pre">
                     {selectedFile && codeFiles[selectedFile as keyof typeof codeFiles]
                       .split('\n')
                       .map((line: string, i: number) => {
@@ -1292,11 +1334,11 @@ struct ProductCatalogApp: App {
                 </div>
 
                 {/* Architecture Layers */}
-                <div className="grid gap-4 mb-6">
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
                   {architectureInfo.layers.map((layer, index) => (
                     <div
                       key={index}
-                      className={`${layer.color} border-2 rounded-lg p-5 transition-transform hover:scale-102`}
+                      className={`${layer.color} border-2 rounded-lg p-4 md:p-5 transition-transform hover:scale-102`}
                     >
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
                         {layer.name}
