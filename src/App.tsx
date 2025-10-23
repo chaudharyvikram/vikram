@@ -38,7 +38,7 @@ const MainPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-pink-500">About Me</h2>
             <p className="mt-4 text-gray-700 leading-relaxed">
-              As Senior iOS Developer with 7+ years of experience in the industry. I have extensive knowledge and expertise in developing iOS applications for various industries such as e-commerce, Social Media, Health, and Trivia Games. My technical skills include proficiency in Swift, Objective-C, and Xcode. I am adept in using various iOS frameworks such as SwiftUI, UIKit, Core Data, Map Kit, In-App Purchase, and Core Animation. I am also experienced in integrating third-party libraries and APIs into iOS applications.
+              As Senior iOS Developer with 8+ years of experience in the industry. I have extensive knowledge and expertise in developing iOS applications for various industries such as e-commerce, Social Media, Health, and Trivia Games. My technical skills include proficiency in Swift, Objective-C, and Xcode. I am adept in using various iOS frameworks such as SwiftUI, UIKit, Core Data, Map Kit, In-App Purchase, and Core Animation. I am also experienced in integrating third-party libraries and APIs into iOS applications.
             </p>
           </div>
         </section>
