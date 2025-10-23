@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SwiftUIArchitectureExplorer from "./SwiftUIArchitectureExplorer";
 import Blogs from './Blogs';
 import BlogDetail from './BlogDetail';
