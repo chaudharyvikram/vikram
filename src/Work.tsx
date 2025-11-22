@@ -4,13 +4,7 @@ import Background from './components/Background';
 import ProjectCard from './components/ProjectCard';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 
-const projects = [
-    {
-        title: "Rings AI CRM and XRM",
-        category: "Productivity",
-        link: "https://apps.apple.com/us/app/rings-ai-crm-and-xrm/id6499084050",
-        color: "from-violet-600 to-cyan-500"
-    },
+const projects = [    
     {
         title: "Calliope Stories",
         category: "Books & Reference",
