@@ -18,64 +18,68 @@ const SwiftUIArchitectureExplorer = () => {
     [key: string]: string;
   };
 
-  // Xcode-style syntax highlighting function
+  // Xcode Presentation Dark Theme (Refined)
   const highlightSwiftCode = (line: string): string => {
     let result = line;
-    
+
     // Escape HTML
     result = result.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    
-    // Comments (green)
-    result = result.replace(/(\/\/.*$)/g, '<span style="color: #6C8756">$1</span>');
-    
-    // Strings (red) - handle before keywords to avoid conflicts
-    result = result.replace(/("(?:[^"\\]|\\.)*")/g, '<span style="color: #D73A49">$1</span>');
-    
-    // Numbers (light blue)
-    result = result.replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #9CDCFE">$1</span>');
-    
-    // Keywords (pink/magenta)
-    const keywords = ['import', 'class', 'struct', 'enum', 'protocol', 'func', 'var', 'let', 
-                     'if', 'else', 'guard', 'return', 'throws', 'throw', 'async', 'await', 
-                     'init', 'private', 'public', 'static', 'final', 'case', 'switch', 
-                     'for', 'while', 'do', 'try', 'catch', 'self', 'Self', 'nil', 'true', 
-                     'false', 'in', 'as', 'is', 'extension', 'typealias', 'associatedtype',
-                     '@MainActor', '@Published', '@StateObject', '@EnvironmentObject', 
-                     '@ViewBuilder', '@escaping'];
-    
+
+    // Comments (Slate Gray)
+    result = result.replace(/(\/\/.*$)/g, '<span style="color: #6C7986">$1</span>');
+
+    // Strings (Salmon Red)
+    result = result.replace(/("(?:[^"\\]|\\.)*")/g, '<span style="color: #FC6A5D">$1</span>');
+
+    // Numbers (Gold)
+    result = result.replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #D0BF69">$1</span>');
+
+    // Attributes (Pink @ + Teal Type) - e.g. @State, @Environment
+    result = result.replace(/@(\w+)/g, '<span style="color: #FC5FA3">@</span><span style="color: #9EF1DD">$1</span>');
+
+    // Keywords (Pink)
+    const keywords = ['import', 'class', 'struct', 'enum', 'protocol', 'func', 'var', 'let',
+      'if', 'else', 'guard', 'return', 'throws', 'throw', 'async', 'await',
+      'init', 'private', 'public', 'static', 'final', 'case', 'switch',
+      'for', 'while', 'do', 'try', 'catch', 'self', 'Self', 'nil', 'true',
+      'false', 'in', 'as', 'is', 'extension', 'typealias', 'associatedtype',
+      'some', 'any', 'where', 'inout', 'operator', 'defer', 'break', 'continue', 'default',
+      'fallthrough', 'subscript', 'weak', 'unowned', 'repeat'];
+
     keywords.forEach(keyword => {
       const regex = new RegExp(`\\b(${keyword})\\b`, 'g');
-      result = result.replace(regex, '<span style="color: #FF7AB2">$1</span>');
+      result = result.replace(regex, '<span style="color: #FC5FA3">$1</span>');
     });
-    
-    // Types and Classes (cyan/turquoise)
-    const types = ['String', 'Int', 'Double', 'Bool', 'Void', 'URL', 'Data', 'Array', 
-                   'Dictionary', 'Set', 'Optional', 'Result', 'Task', 'Error',
-                   'Foundation', 'SwiftUI', 'Combine', 'URLSession', 'URLRequest',
-                   'JSONEncoder', 'JSONDecoder', 'UserDefaults', 'HTTPURLResponse',
-                   'Identifiable', 'Equatable', 'Codable', 'Decodable', 'Encodable',
-                   'ObservableObject', 'View', 'NavigationStack', 'NavigationPath',
-                   'VStack', 'HStack', 'List', 'Text', 'Button', 'Image', 'TextField',
-                   'SecureField', 'ScrollView', 'AsyncImage', 'ProgressView', 'Divider',
-                   'Spacer', 'Rectangle', 'Color', 'LinearGradient', 'WindowGroup',
-                   'Scene'];
-    
+
+    // Types and Classes (Teal/Cyan)
+    const types = ['String', 'Int', 'Double', 'Bool', 'Void', 'URL', 'Data', 'Array',
+      'Dictionary', 'Set', 'Optional', 'Result', 'Task', 'Error',
+      'Foundation', 'SwiftUI', 'Combine', 'URLSession', 'URLRequest',
+      'JSONEncoder', 'JSONDecoder', 'UserDefaults', 'HTTPURLResponse',
+      'Identifiable', 'Equatable', 'Codable', 'Decodable', 'Encodable',
+      'ObservableObject', 'View', 'NavigationStack', 'NavigationPath',
+      'VStack', 'HStack', 'List', 'Text', 'Button', 'Image', 'TextField',
+      'SecureField', 'ScrollView', 'AsyncImage', 'ProgressView', 'Divider',
+      'Spacer', 'Rectangle', 'Color', 'LinearGradient', 'WindowGroup',
+      'Scene', 'Body', 'MainActor', 'Published', 'StateObject', 'EnvironmentObject',
+      'ViewBuilder', 'Environment', 'State', 'Binding', 'Query', 'ModelContext'];
+
     types.forEach(type => {
       const regex = new RegExp(`\\b(${type})\\b`, 'g');
-      result = result.replace(regex, '<span style="color: #67C5CE">$1</span>');
+      result = result.replace(regex, '<span style="color: #9EF1DD">$1</span>');
     });
-    
-    // Function calls (light yellow)
-    result = result.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g, '<span style="color: #DCDCAA">$1</span>(');
-    
-    // Properties and variables after dot notation (light blue)
-    result = result.replace(/\.([a-zA-Z_][a-zA-Z0-9_]*)/g, '.<span style="color: #9CDCFE">$1</span>');
-    
-    // Default text color (light gray)
+
+    // Function calls (Light Violet)
+    result = result.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g, '<span style="color: #ddd6fe">$1</span>(');
+
+    // Properties and variables after dot notation (Light Violet)
+    result = result.replace(/\.([a-zA-Z_][a-zA-Z0-9_]*)/g, '.<span style="color: #ddd6fe">$1</span>');
+
+    // Default text color (White)
     if (!result.includes('<span')) {
-      result = `<span style="color: #D4D4D4">${result}</span>`;
+      result = `<span style="color: #FFFFFF">${result}</span>`;
     }
-    
+
     return result;
   };
 
@@ -724,7 +728,7 @@ struct LoginView: View {
             VStack(spacing: 8) {
                 Image(systemName: "cart.fill")
                     .font(.system(size: 60))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.purple)
                 
                 Text("Product Catalog")
                     .font(.title)
@@ -758,7 +762,7 @@ struct LoginView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, minHeight: 50)
-                .background(viewModel.isFormValid ? Color.blue : Color.gray)
+                .background(viewModel.isFormValid ? Color.purple : Color.gray)
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .disabled(!viewModel.isFormValid || viewModel.isLoading)
@@ -878,7 +882,7 @@ struct ProductCard: View {
                 Text(product.formattedPrice)
                     .font(.title3)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.purple)
             }
             Spacer()
         }
@@ -967,7 +971,7 @@ struct ProductDetailView: View {
                     Button(action: viewModel.addToCart) {
                         Text("Add to Cart - \\(viewModel.totalPrice)")
                             .frame(maxWidth: .infinity, minHeight: 50)
-                            .background(Color.blue)
+                            .background(Color.purple)
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -1032,7 +1036,7 @@ struct ErrorView: View {
             Button(action: retry) {
                 Text("Try Again")
                     .frame(width: 200, height: 44)
-                    .background(Color.blue)
+                    .background(Color.purple)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
@@ -1089,16 +1093,16 @@ struct ProductCatalogApp: App {
             {item.type === 'folder' ? (
               <div>
                 <div
-                  className="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 cursor-pointer rounded"
+                  className="flex items-center gap-2 px-2 py-1 hover:bg-white/10 cursor-pointer rounded text-gray-300 hover:text-white transition-colors"
                   style={{ paddingLeft: `${level * 16 + 8}px` }}
                   onClick={() => toggleFolder(item.path)}
                 >
                   {expandedFolders[item.path] ? (
-                    <ChevronDown size={16} className="text-gray-600" />
+                    <ChevronDown size={16} className="text-gray-400" />
                   ) : (
-                    <ChevronRight size={16} className="text-gray-600" />
+                    <ChevronRight size={16} className="text-gray-400" />
                   )}
-                  <Folder size={16} className="text-blue-500" />
+                  <Folder size={16} className="text-violet-400" />
                   <span className="text-sm font-medium">{item.name}</span>
                 </div>
                 {expandedFolders[item.path] && item.children && (
@@ -1107,9 +1111,8 @@ struct ProductCatalogApp: App {
               </div>
             ) : (
               <div
-                className={`flex items-center gap-2 px-2 py-1 hover:bg-gray-100 cursor-pointer rounded ${
-                  selectedFile === item.path ? 'bg-blue-50' : ''
-                }`}
+                className={`flex items-center gap-2 px-2 py-1 hover:bg-white/10 cursor-pointer rounded transition-colors ${selectedFile === item.path ? 'bg-violet-500/20 text-violet-300' : 'text-gray-400 hover:text-white'
+                  }`}
                 style={{ paddingLeft: `${level * 16 + 32}px` }}
                 onClick={() => {
                   setSelectedFile(item.path);
@@ -1118,7 +1121,7 @@ struct ProductCatalogApp: App {
                   }
                 }}
               >
-                <FileCode size={16} className="text-gray-400" />
+                <FileCode size={16} className={selectedFile === item.path ? "text-violet-400" : "text-gray-500"} />
                 <span className="text-sm">{item.name}</span>
               </div>
             )}
@@ -1133,7 +1136,7 @@ struct ProductCatalogApp: App {
     layers: [
       {
         name: "Domain Layer",
-        color: "bg-purple-100 border-purple-300",
+        color: "bg-fuchsia-100 border-fuchsia-300",
         description: "Business logic - completely independent",
         components: ["Entities", "Use Cases", "Repository Protocols"]
       },
@@ -1145,7 +1148,7 @@ struct ProductCatalogApp: App {
       },
       {
         name: "Presentation Layer",
-        color: "bg-blue-100 border-blue-300",
+        color: "bg-violet-100 border-violet-300",
         description: "UI and user interaction",
         components: ["Views (SwiftUI)", "ViewModels", "Coordinators"]
       },
@@ -1175,14 +1178,14 @@ struct ProductCatalogApp: App {
   }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-50">
+    <div className="w-full h-screen flex flex-col bg-transparent text-gray-100">
       <Header />
       {/* Section Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-lg mt-16">
+      <div className="bg-gradient-to-r from-violet-900 to-fuchsia-900 text-white p-6 shadow-lg mt-16 border-b border-white/10">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold mb-2">SwiftUI Clean Architecture Example</h1>
-            <p className="text-blue-100 text-sm md:text-base">Complete Product Catalog App with MVVM + Clean Architecture</p>
+            <p className="text-violet-100 text-sm md:text-base">Complete Product Catalog App with MVVM + Clean Architecture</p>
           </div>
           {isMobile && (
             <button
@@ -1206,16 +1209,14 @@ struct ProductCatalogApp: App {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden relative">
         {/* Sidebar - File Tree */}
-        <div className={`${
-          isMobile 
-            ? `absolute z-10 top-0 bottom-0 transition-transform duration-300 ${
-                isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-              }`
-            : 'relative'
-        } w-full md:w-80 bg-white border-r border-gray-200 overflow-y-auto`}>
-          <div className="p-4 border-b border-gray-200 bg-gray-50">
-            <h2 className="font-semibold text-gray-700 flex items-center gap-2">
-              <Folder size={18} className="text-blue-500" />
+        <div className={`${isMobile
+          ? `absolute z-10 top-0 bottom-0 transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`
+          : 'relative'
+          } w-full md:w-80 bg-black/40 backdrop-blur-xl border-r border-white/10 overflow-y-auto`}>
+          <div className="p-4 border-b border-white/10 bg-white/5">
+            <h2 className="font-semibold text-gray-200 flex items-center gap-2">
+              <Folder size={18} className="text-violet-500" />
               Project Structure
             </h2>
           </div>
@@ -1228,11 +1229,11 @@ struct ProductCatalogApp: App {
         <div className="flex-1 flex flex-col overflow-hidden">
           {selectedFile ? (
             <>
-              <div className="bg-gray-100 border-b border-gray-200 px-2 md:px-4 py-2 text-xs md:text-sm font-mono flex items-center justify-between">
-                <span className="text-gray-700 truncate">{selectedFile}</span>
+              <div className="bg-white/5 backdrop-blur-md border-b border-white/10 px-2 md:px-4 py-2 text-xs md:text-sm font-mono flex items-center justify-between">
+                <span className="text-gray-400 truncate">{selectedFile}</span>
                 <div className="flex items-center gap-2 ml-2">
-                  <button 
-                    className="p-1 hover:bg-gray-200 rounded transition-colors" 
+                  <button
+                    className="p-1 hover:bg-white/10 rounded transition-colors"
                     title="Copy code"
                     onClick={() => {
                       if (selectedFile && codeFiles[selectedFile as keyof typeof codeFiles]) {
@@ -1248,15 +1249,15 @@ struct ProductCatalogApp: App {
                       }
                     }}
                   >
-                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                   </button>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto bg-white p-2 md:p-4">
+              <div className="flex-1 overflow-y-auto bg-black/60 backdrop-blur-md p-2 md:p-4">
                 <pre className="text-xs md:text-sm font-mono leading-relaxed overflow-x-auto">
-                  <code className="text-gray-800 whitespace-pre">
+                  <code className="text-gray-300 whitespace-pre">
                     {selectedFile && codeFiles[selectedFile as keyof typeof codeFiles]
                       .split('\n')
                       .map((line: string, i: number) => {
@@ -1281,7 +1282,7 @@ struct ProductCatalogApp: App {
                           const keywordMatch = remaining.match(/^(.*?)?\b(class|struct|enum|protocol|func|var|let|if|else|guard|return|throws|async|await|init|private|public|static)\b(.*?)$/);
                           if (keywordMatch) {
                             if (keywordMatch[1]) parts.push(<span key={key++}>{keywordMatch[1]}</span>);
-                            parts.push(<span key={key++} className="text-purple-700">{keywordMatch[2]}</span>);
+                            parts.push(<span key={key++} className="text-fuchsia-700">{keywordMatch[2]}</span>);
                             remaining = keywordMatch[3] || '';
                             continue;
                           }
@@ -1290,7 +1291,7 @@ struct ProductCatalogApp: App {
                           const typeMatch = remaining.match(/^(.*?)?\b(String|Int|Double|Bool|Void|Self|URL|Data)\b(.*?)$/);
                           if (typeMatch) {
                             if (typeMatch[1]) parts.push(<span key={key++}>{typeMatch[1]}</span>);
-                            parts.push(<span key={key++} className="text-blue-600">{typeMatch[2]}</span>);
+                            parts.push(<span key={key++} className="text-violet-600">{typeMatch[2]}</span>);
                             remaining = typeMatch[3] || '';
                             continue;
                           }
@@ -1324,14 +1325,14 @@ struct ProductCatalogApp: App {
             <div className="flex-1 overflow-y-auto p-6">
               {/* Architecture Overview */}
               <div className="max-w-4xl mx-auto">
-                <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div className="bg-white/5 border border-white/10 rounded-lg shadow-md p-6 mb-6 backdrop-blur-sm">
                   <div className="flex items-start gap-3 mb-4">
-                    <Info className="text-blue-500 mt-1" size={24} />
+                    <Info className="text-violet-400 mt-1" size={24} />
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                      <h2 className="text-2xl font-bold text-white mb-2">
                         {architectureInfo.title}
                       </h2>
-                      <p className="text-gray-600">
+                      <p className="text-gray-400">
                         A production-ready SwiftUI app demonstrating best practices for large-scale applications
                       </p>
                     </div>
@@ -1343,19 +1344,19 @@ struct ProductCatalogApp: App {
                   {architectureInfo.layers.map((layer, index) => (
                     <div
                       key={index}
-                      className={`${layer.color} border-2 rounded-lg p-4 md:p-5 transition-transform hover:scale-102`}
+                      className={`${layer.color} border rounded-lg p-4 md:p-5 transition-transform hover:scale-102 bg-opacity-10 backdrop-blur-sm`}
                     >
-                      <h3 className="text-lg font-bold text-gray-800 mb-2">
+                      <h3 className="text-lg font-bold text-white mb-2">
                         {layer.name}
                       </h3>
-                      <p className="text-gray-700 mb-3 text-sm">
+                      <p className="text-gray-300 mb-3 text-sm">
                         {layer.description}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {layer.components.map((component, idx) => (
                           <span
                             key={idx}
-                            className="px-3 py-1 bg-white rounded-full text-xs font-medium text-gray-700 shadow-sm"
+                            className="px-3 py-1 bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-200 shadow-sm"
                           >
                             {component}
                           </span>
@@ -1366,8 +1367,8 @@ struct ProductCatalogApp: App {
                 </div>
 
                 {/* Key Features */}
-                <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Key Features</h3>
+                <div className="bg-white/5 border border-white/10 rounded-lg shadow-md p-6 mb-6 backdrop-blur-sm">
+                  <h3 className="text-xl font-bold text-white mb-4">Key Features</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     {[
                       { title: "Dependency Injection", desc: "Centralized DI container for easy testing" },
@@ -1379,11 +1380,11 @@ struct ProductCatalogApp: App {
                       { title: "MVVM", desc: "Clear separation of concerns" },
                       { title: "Protocol-Oriented", desc: "Testable and flexible architecture" }
                     ].map((feature, idx) => (
-                      <div key={idx} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
-                        <div className="w-2 h-2 mt-2 rounded-full bg-blue-500 flex-shrink-0" />
+                      <div key={idx} className="flex gap-3 p-3 bg-white/5 rounded-lg border border-white/5 hover:border-violet-500/30 transition-colors">
+                        <div className="w-2 h-2 mt-2 rounded-full bg-violet-500 flex-shrink-0 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
                         <div>
-                          <div className="font-semibold text-gray-800">{feature.title}</div>
-                          <div className="text-sm text-gray-600">{feature.desc}</div>
+                          <div className="font-semibold text-gray-200">{feature.title}</div>
+                          <div className="text-sm text-gray-400">{feature.desc}</div>
                         </div>
                       </div>
                     ))}
@@ -1391,88 +1392,88 @@ struct ProductCatalogApp: App {
                 </div>
 
                 {/* Data Flow */}
-                <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Data Flow Example</h3>
+                <div className="bg-white/5 border border-white/10 rounded-lg shadow-md p-6 mb-6 backdrop-blur-sm">
+                  <h3 className="text-xl font-bold text-white mb-4">Data Flow Example</h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">1</div>
-                      <div className="flex-1 p-3 bg-blue-50 rounded">
-                        <span className="font-semibold">View</span> - User taps "Login" button
+                      <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-900/20">1</div>
+                      <div className="flex-1 p-3 bg-violet-900/20 border border-violet-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-violet-300">View</span> - User taps "Login" button
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">2</div>
-                      <div className="flex-1 p-3 bg-blue-50 rounded">
-                        <span className="font-semibold">ViewModel</span> - Calls LoginUseCase
+                      <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-900/20">2</div>
+                      <div className="flex-1 p-3 bg-violet-900/20 border border-violet-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-violet-300">ViewModel</span> - Calls LoginUseCase
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold">3</div>
-                      <div className="flex-1 p-3 bg-purple-50 rounded">
-                        <span className="font-semibold">Use Case</span> - Validates input, calls Repository
+                      <div className="w-8 h-8 rounded-full bg-fuchsia-600 text-white flex items-center justify-center font-bold shadow-lg shadow-fuchsia-900/20">3</div>
+                      <div className="flex-1 p-3 bg-fuchsia-900/20 border border-fuchsia-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-fuchsia-300">Use Case</span> - Validates input, calls Repository
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold">4</div>
-                      <div className="flex-1 p-3 bg-green-50 rounded">
-                        <span className="font-semibold">Repository</span> - Fetches from Remote/Local DataSource
+                      <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold shadow-lg shadow-green-900/20">4</div>
+                      <div className="flex-1 p-3 bg-green-900/20 border border-green-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-green-300">Repository</span> - Fetches from Remote/Local DataSource
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center font-bold">5</div>
-                      <div className="flex-1 p-3 bg-yellow-50 rounded">
-                        <span className="font-semibold">DataSource</span> - Makes API call via APIClient
+                      <div className="w-8 h-8 rounded-full bg-yellow-600 text-white flex items-center justify-center font-bold shadow-lg shadow-yellow-900/20">5</div>
+                      <div className="flex-1 p-3 bg-yellow-900/20 border border-yellow-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-yellow-300">DataSource</span> - Makes API call via APIClient
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold">6</div>
-                      <div className="flex-1 p-3 bg-green-50 rounded">
-                        <span className="font-semibold">Repository</span> - Converts DTO to Domain model
+                      <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold shadow-lg shadow-green-900/20">6</div>
+                      <div className="flex-1 p-3 bg-green-900/20 border border-green-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-green-300">Repository</span> - Converts DTO to Domain model
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">7</div>
-                      <div className="flex-1 p-3 bg-blue-50 rounded">
-                        <span className="font-semibold">ViewModel</span> - Updates @Published properties
+                      <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-900/20">7</div>
+                      <div className="flex-1 p-3 bg-violet-900/20 border border-violet-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-violet-300">ViewModel</span> - Updates @Published properties
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">8</div>
-                      <div className="flex-1 p-3 bg-blue-50 rounded">
-                        <span className="font-semibold">View</span> - SwiftUI re-renders UI
+                      <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-900/20">8</div>
+                      <div className="flex-1 p-3 bg-violet-900/20 border border-violet-500/20 rounded text-gray-300">
+                        <span className="font-semibold text-violet-300">View</span> - SwiftUI re-renders UI
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Testing Benefits */}
-                <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg shadow-md p-6 border border-green-200">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">Testing Benefits</h3>
-                  <p className="text-gray-700 mb-3">
+                <div className="bg-gradient-to-r from-green-900/20 to-violet-900/20 rounded-lg shadow-md p-6 border border-green-500/20 backdrop-blur-sm">
+                  <h3 className="text-xl font-bold text-white mb-3">Testing Benefits</h3>
+                  <p className="text-gray-300 mb-3">
                     Each layer can be tested independently with mock implementations:
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-700">
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start gap-2">
-                      <span className="text-green-500 font-bold">✓</span>
+                      <span className="text-green-400 font-bold">✓</span>
                       <span><strong>ViewModels:</strong> Test with mock use cases</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-green-500 font-bold">✓</span>
+                      <span className="text-green-400 font-bold">✓</span>
                       <span><strong>Use Cases:</strong> Test with mock repositories</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-green-500 font-bold">✓</span>
+                      <span className="text-green-400 font-bold">✓</span>
                       <span><strong>Repositories:</strong> Test with mock data sources</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-green-500 font-bold">✓</span>
+                      <span className="text-green-400 font-bold">✓</span>
                       <span><strong>Views:</strong> SwiftUI preview providers with mock data</span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm text-gray-700">
+                <div className="mt-6 p-4 bg-violet-900/20 border border-violet-500/20 rounded-lg">
+                  <p className="text-sm text-gray-300">
                     <strong>💡 Tip:</strong> Click on any file in the left sidebar to view its complete implementation.
                     This example includes login, product listing, search, and detail views.
                   </p>
