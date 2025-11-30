@@ -11,6 +11,7 @@ import Work from './Work';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import { useEffect } from "react";
 import vikramImage from './assets/vikram.jpg';
+import ahmedabadMap from './assets/ahmedabad_map.png';
 
 const MainPage = () => {
   useScrollAnimation();
@@ -176,8 +177,18 @@ const MainPage = () => {
 
           {/* Map/Location Card */}
           <div className="col-span-1 md:col-span-2 rounded-3xl bg-surface/50 backdrop-blur-xl border border-white/5 p-6 relative overflow-hidden group hover:border-secondary/30 transition-all duration-300 min-h-[200px]">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative z-10 h-full flex flex-col justify-between">
+            {/* Map Background */}
+            <div className="absolute inset-0 z-0">
+              <img
+                src={ahmedabadMap}
+                alt="Ahmedabad Map"
+                className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500 scale-110 group-hover:scale-100 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent" />
+            </div>
+
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+            <div className="relative z-20 h-full flex flex-col justify-between">
               <div className="flex justify-between items-start">
                 <h3 className="text-gray-400 text-sm uppercase tracking-wider">Based In</h3>
                 <div className="p-2 bg-white/10 rounded-full">

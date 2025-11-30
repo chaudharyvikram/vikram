@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Generator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        body { margin: 0; padding: 0; background: #000; }
+        #map { width: 800px; height: 800px; }
+        .leaflet-control-attribution { display: none; } /* Hide attribution for the screenshot asset */
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Coordinates for Fortune Business Hub, Ahmedabad
+        const lat = 23.078675;
+        const lng = 72.501335;
+        
+        // "Less zoomed" - trying zoom level 14 to show context (Science City area)
+        const zoomLevel = 14;
+
+        const map = L.map('map', {
+            zoomControl: false,
+            attributionControl: false
+        }).setView([lat, lng], zoomLevel);
+
+        // CartoDB Dark Matter Tiles (Perfect for the theme)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 20
+        }).addTo(map);
+
+        // Custom marker icon (cyan/purple glow style)
+        const customIcon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="
+                width: 20px;
+                height: 20px;
+                background-color: #06b6d4;
+                border-radius: 50%;
+                box-shadow: 0 0 15px #06b6d4, 0 0 30px #06b6d4;
+                border: 2px solid white;
+            "></div>`,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        L.marker([lat, lng], { icon: customIcon }).addTo(map);
+    </script>
+</body>
+</html>
