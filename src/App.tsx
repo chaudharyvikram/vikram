@@ -10,6 +10,7 @@ import Background from './components/Background';
 import Work from './Work';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import { useEffect } from "react";
+import vikramImage from './assets/vikram.jpg';
 
 const MainPage = () => {
   useScrollAnimation();
@@ -84,7 +85,7 @@ const MainPage = () => {
             {/* Main Image */}
             <div className="relative z-10 w-full h-full flex items-center justify-center">
               <img
-                src="/src/assets/vikram.jpg"
+                src={vikramImage}
                 alt="Vikram Chaudhary"
                 className="h-[550px] w-auto object-cover rounded-[2.5rem] mask-image-gradient"
                 style={{
