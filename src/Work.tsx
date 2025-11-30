@@ -4,7 +4,7 @@ import Background from './components/Background';
 import ProjectCard from './components/ProjectCard';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 
-const projects = [    
+const projects = [
     {
         title: "Calliope Stories",
         category: "Books & Reference",
@@ -65,13 +65,19 @@ const Work = () => {
     useScrollAnimation();
 
     return (
-        <div className="min-h-screen flex flex-col text-white selection:bg-violet-500 selection:text-white relative">
+        <div className="min-h-screen flex flex-col bg-background text-white selection:bg-primary selection:text-white relative">
             <Header />
+
+            {/* Ambient Background Glow */}
+            <div className="fixed inset-0 pointer-events-none">
+                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse-slow" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-secondary/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+            </div>
 
             <main className="flex-1 relative z-10 pt-24 px-6">
                 <div className="max-w-7xl mx-auto animate-on-scroll">
                     <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center">
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
                             Featured Work
                         </span>
                     </h1>

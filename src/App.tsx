@@ -1,5 +1,7 @@
-import React from "react";
-import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import FeaturedProjectCard from './components/FeaturedProjectCard';
+import { projects } from './data/projects';
 import SwiftUIArchitectureExplorer from "./SwiftUIArchitectureExplorer";
 import Blogs from './Blogs';
 import BlogDetail from './BlogDetail';
@@ -7,136 +9,270 @@ import Header from './components/Header';
 import Background from './components/Background';
 import Work from './Work';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
+import { useEffect } from "react";
 
 const MainPage = () => {
   useScrollAnimation();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else if (location.state && (location.state as any).scrollTo) {
+      const scrollToId = (location.state as any).scrollTo;
+      const element = document.getElementById(scrollToId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+          // Optional: Clear state to prevent scroll on refresh, but requires history manipulation
+          // window.history.replaceState({}, document.title); 
+        }, 100);
+      }
+    }
+  }, [location]);
 
   return (
-    <div className="min-h-screen flex flex-col text-white selection:bg-violet-500 selection:text-white relative">
+    <div className="min-h-screen bg-background text-white selection:bg-primary selection:text-white relative overflow-hidden">
       <Header />
 
-      <main className="flex-1 relative z-10">
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex flex-col justify-center px-6 pt-20 animate-on-scroll bg-transparent">
-          <div className="max-w-5xl mx-auto w-full relative z-10">
-            <div className="space-y-8">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-100 to-gray-400">
-                  Vikram
-                </span>
-                <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400">
-                  Chaudhary
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl leading-relaxed border-l-4 border-violet-500 pl-6">
-                Expert iOS & Android Developer (SwiftUI, Kotlin, Flutter) <br />
-                <span className="text-gray-500">Building High-Quality, Scalable Apps for Startups & Enterprises</span>
-              </p>
-              <p className="text-lg text-gray-400 flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-                Ahmedabad, Gujarat, India
-              </p>
+      {/* Ambient Background Glow */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      </div>
 
-              <div className="pt-8 flex flex-wrap gap-4">
-                <a href="mailto:vikramchaudhary.dev@gmail.com" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-violet-50 transition-all hover:scale-105 transform duration-200 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                  Contact Me
-                </a>
-                <Link to="/work" className="px-8 py-4 border border-white/20 rounded-full hover:bg-white/10 transition-all hover:scale-105 transform duration-200 backdrop-blur-sm">
-                  View Work
-                </Link>
-              </div>
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-24">
+
+        {/* HERO SECTION - Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24 min-h-[80vh]">
+          {/* Left Content */}
+          <div className="space-y-8 relative z-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-secondary mb-4 backdrop-blur-md">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              Available for new projects
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+              I'm Vikram, <br />
+              a <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Mobile App Developer</span>
+            </h1>
+
+            <p className="text-gray-400 text-lg md:text-xl max-w-lg leading-relaxed">
+              🚀 Expert iOS & Android Developer (Swift, UIKit, SwiftUI, Kotlin, Compose, Flutter) | Building High-Quality, Scalable Apps for Startups & Enterprises
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-4">
+              <button className="group relative pl-8 pr-2 py-2 bg-white text-black rounded-full font-semibold text-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+                Hire Me
+                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center group-hover:-rotate-45 transition-transform duration-300">
+                  <ArrowRight className="w-5 h-5 text-white" />
+                </div>
+              </button>
             </div>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-gray-500">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-          </div>
-        </section>
+          {/* Right Content - Image */}
+          <div className="relative h-[600px] flex items-center justify-center">
+            {/* Decorative Elements */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-[100px] animate-pulse-slow" />
 
-        {/* Summary Section */}
-        <section className="py-24 px-6 animate-on-scroll">
-          <div className="max-w-4xl mx-auto space-y-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-violet-400">Summary</h2>
-              <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
-                <p>
-                  I'm Vikram — a Senior iOS & Android Developer with 8+ years of experience helping startups and companies turn ideas into high-quality, scalable mobile apps.
-                </p>
-                <p>
-                  I specialize in building beautiful, reliable, and high-performance mobile applications using SwiftUI, Kotlin, and Flutter — with clean architecture, optimized performance, and modern UX.
-                </p>
-              </div>
-            </div>
+            {/* Main Image */}
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+              <img
+                src="/src/assets/vikram.jpg"
+                alt="Vikram Chaudhary"
+                className="h-[550px] w-auto object-cover rounded-[2.5rem] mask-image-gradient"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+                }}
+              />
 
-            <div>
-              <h3 className="text-2xl font-semibold mb-6 text-fuchsia-400">What sets me apart:</h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-violet-500/30 transition-all hover:-translate-y-1 duration-300 backdrop-blur-sm">
-                  <div className="text-4xl font-bold text-white mb-2">20+</div>
-                  <p className="text-gray-400">Apps published on App Store & Play Store</p>
-                </div>
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-fuchsia-500/30 transition-all hover:-translate-y-1 duration-300 backdrop-blur-sm">
-                  <div className="text-4xl font-bold text-white mb-2">Global</div>
-                  <p className="text-gray-400">Clients across US, UK, Europe, Canada, Australia, UAE & India</p>
-                </div>
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-pink-500/30 transition-all hover:-translate-y-1 duration-300 backdrop-blur-sm">
-                  <div className="text-4xl font-bold text-white mb-2">100K+</div>
-                  <p className="text-gray-400">Users scaled for startups launching MVPs</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
-              <p>
-                Strong focus on UI/UX, animations, and fluid user interactions.
-              </p>
-              <p>
-                Whether you need a new app built from scratch or want to improve an existing one, I bring both technical depth and business understanding.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Latest Articles Section */}
-        <section className="py-24 px-6 animate-on-scroll">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Latest Posts</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Link to="/blogs/swiftui-architecture" className="group block">
-                <div className="h-full p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 hover:border-violet-500/50 transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-violet-500/10 backdrop-blur-sm">
-                  <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-violet-400 transition-colors">SwiftUI Clean Architecture Example</h3>
-                  <p className="text-gray-400 mb-6">Interactive exploration and walkthrough of Clean Architecture applied to a SwiftUI Product Catalog App.</p>
-                  <div className="flex items-center text-sm text-violet-400 font-medium">
-                    Read post <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              {/* Floating Badges */}
+              <div className="absolute top-20 right-10 bg-surface/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-2xl animate-bounce duration-[3000ms]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="text-xl"></span>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 uppercase tracking-wider">Experience</p>
+                    <p className="text-lg font-bold text-white">8+ Years</p>
                   </div>
                 </div>
-              </Link>
+              </div>
+
+              <div className="absolute bottom-40 left-0 bg-surface/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-2xl animate-bounce duration-[4000ms]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
+                    <span className="text-xl">📱</span>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 uppercase tracking-wider">App Store</p>
+                    <p className="text-lg font-bold text-white">20+ Apps</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* CTA Section */}
-        <section className="py-24 px-6 animate-on-scroll">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold">Let's collaborate to bring your app idea to life.</h2>
-            <a href="mailto:vikramchaudhary.dev@gmail.com" className="inline-block text-xl md:text-2xl text-violet-400 hover:text-violet-300 transition-colors border-b border-violet-400/30 hover:border-violet-300 pb-1">
-              vikramchaudhary.dev@gmail.com
-            </a>
+        {/* Marquee Strip */}
+        <div className="w-[120vw] overflow-hidden border-y border-white/5 bg-white/5 backdrop-blur-sm py-6 mb-24 -rotate-2 transform origin-center relative left-1/2 -translate-x-1/2">
+          <div className="flex whitespace-nowrap animate-marquee">
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="flex items-center mx-8 text-gray-400 font-medium tracking-widest uppercase">
+                <span className="text-primary mr-4">+</span>
+                PIXEL PERFECT
+                <span className="text-secondary mx-4">+</span>
+                SCALABLE
+                <span className="text-primary mx-4">+</span>
+                NATIVE PERFORMANCE
+                <span className="text-secondary mx-4">+</span>
+                INTERACTIVE
+                <span className="text-primary mx-4">+</span>
+                CLEAN ARCHITECTURE
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+
+        {/* Recent Work Section */}
+        <div id="recent-work" className="mb-24 space-y-12">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="w-12 h-[1px] bg-primary"></span>
+            <span className="text-primary font-medium tracking-widest uppercase">Recent Work</span>
+          </div>
+
+          <div className="space-y-8">
+            {projects.map((project, index) => (
+              <FeaturedProjectCard
+                key={index}
+                {...project}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Bento Grid Layout (Remaining Content) */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(180px,auto)]">
+
+          {/* Tech Stack - Scrolling Marquee style within a card */}
+          <div className="col-span-1 md:col-span-2 rounded-3xl bg-surface/50 backdrop-blur-xl border border-white/5 p-8 flex flex-col justify-center overflow-hidden group hover:border-primary/30 transition-all duration-300">
+            <h3 className="text-gray-400 text-sm uppercase tracking-wider mb-6">Mobile Tech Stack</h3>
+            <div className="flex flex-wrap gap-3">
+              {['Swift', 'SwiftUI', 'Kotlin', 'Jetpack Compose', 'Flutter', 'Dart', 'UIKit', 'Clean Architecture', 'CI/CD', 'Fastlane'].map((tech) => (
+                <span key={tech} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 text-sm hover:bg-white/10 hover:text-white transition-colors cursor-default">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Map/Location Card */}
+          <div className="col-span-1 md:col-span-2 rounded-3xl bg-surface/50 backdrop-blur-xl border border-white/5 p-6 relative overflow-hidden group hover:border-secondary/30 transition-all duration-300 min-h-[200px]">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 h-full flex flex-col justify-between">
+              <div className="flex justify-between items-start">
+                <h3 className="text-gray-400 text-sm uppercase tracking-wider">Based In</h3>
+                <div className="p-2 bg-white/10 rounded-full">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">Ahmedabad</p>
+                <p className="text-gray-400">Gujarat, India</p>
+              </div>
+            </div>
+          </div>
+
+          {/* About Me Section */}
+          <div className="col-span-1 md:col-span-4 rounded-3xl bg-surface/50 backdrop-blur-xl border border-white/5 p-8 relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 space-y-6">
+              <div className="flex items-center gap-4 mb-2">
+                <span className="w-12 h-[1px] bg-primary"></span>
+                <span className="text-primary font-medium tracking-widest uppercase">About Me</span>
+              </div>
+
+              <div className="space-y-4 text-gray-300 leading-relaxed">
+                <p className="text-lg text-white font-medium">
+                  👋 I’m Vikram — a Senior iOS & Android Developer with 8+ years of experience helping startups and companies turn ideas into high-quality, scalable mobile apps.
+                </p>
+
+                <p>
+                  I specialize in building beautiful, reliable, and high-performance mobile applications using <span className="text-white">SwiftUI, Kotlin, and Flutter</span> — with clean architecture, optimized performance, and modern UX.
+                </p>
+
+                <div className="py-4">
+                  <h4 className="text-white font-semibold mb-4">What sets me apart:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <span className="text-xl mt-0.5">✅</span>
+                      <span>20+ apps published on App Store & Play Store</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-xl mt-0.5">🌎</span>
+                      <span>Experience working with international clients across the US, UK, Europe, Canada, Australia, UAE, Saudi Arabia and India</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-xl mt-0.5">💡</span>
+                      <span>Proven track record helping startups launch MVPs and scale to 100K+ users</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-xl mt-0.5">🧩</span>
+                      <span>Strong focus on UI/UX, animations, and fluid user interactions</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p>
+                  Whether you need a new app built from scratch or want to improve an existing one, I bring both technical depth and business understanding.
+                </p>
+
+                <div className="pt-4 flex items-center gap-2">
+                  <span className="text-xl">📩</span>
+                  <span className="font-medium text-white">Let’s collaborate to bring your app idea to life. Email:</span>
+                  <a href="mailto:vikramchaudhary.dev@gmail.com" className="text-primary hover:text-secondary transition-colors font-medium">
+                    vikramchaudhary.dev@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Blog Post - Large Card */}
+          <Link id="latest-article" to="/blogs/swiftui-architecture" className="col-span-1 md:col-span-4 rounded-3xl bg-surface/50 backdrop-blur-xl border border-white/5 p-8 group hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+              <div className="flex-1 space-y-4">
+                <div className="inline-flex items-center gap-2 text-primary text-sm font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Latest Article
+                </div>
+                <h2 className="text-3xl font-bold text-white group-hover:text-primary transition-colors">SwiftUI Clean Architecture</h2>
+                <p className="text-gray-400 max-w-2xl">
+                  Interactive exploration and walkthrough of Clean Architecture applied to a SwiftUI Product Catalog App. Dive deep into the code structure.
+                </p>
+                <div className="flex items-center text-white font-medium group-hover:translate-x-2 transition-transform duration-300">
+                  Read Article <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </div>
+              </div>
+              <div className="w-full md:w-1/3 aspect-video rounded-2xl bg-black/50 border border-white/10 flex items-center justify-center overflow-hidden">
+                <div className="text-6xl">🏗️</div>
+              </div>
+            </div>
+          </Link>
+
+        </div>
       </main>
 
-      <footer className="py-12 px-6 border-t border-white/5 bg-black/40 backdrop-blur-xl">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex gap-6">
-            <a href="https://linkedin.com/in/chaudharyvikram" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">LinkedIn</a>
-            <a href="https://instagram.com/_chaudharyvikram/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">Instagram</a>
-            <a href="https://x.com/_ivikram" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">X (Twitter)</a>
-          </div>
-          <p className="text-sm text-gray-600">&copy; 2024 Vikram Chaudhary. All rights reserved.</p>
-        </div>
+      <footer className="py-12 pb-32 text-center text-gray-600 text-sm">
+        <p>&copy; {new Date().getFullYear()} Vikram Chaudhary.</p>
       </footer>
     </div>
   );

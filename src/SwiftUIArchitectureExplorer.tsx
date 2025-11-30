@@ -1181,7 +1181,7 @@ struct ProductCatalogApp: App {
     <div className="w-full h-screen flex flex-col bg-transparent text-gray-100">
       <Header />
       {/* Section Header */}
-      <div className="bg-gradient-to-r from-violet-900 to-fuchsia-900 text-white p-6 shadow-lg mt-16 border-b border-white/10">
+      <div className="bg-gradient-to-r from-violet-900 to-fuchsia-900 text-white p-6 shadow-lg border-b border-white/10">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold mb-2">SwiftUI Clean Architecture Example</h1>
