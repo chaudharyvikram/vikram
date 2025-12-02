@@ -69,7 +69,10 @@ const MainPage = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="group relative pl-8 pr-2 py-2 bg-white text-black rounded-full font-semibold text-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+              <button
+                onClick={() => window.location.href = 'mailto:vikramchaudhary.dev@gmail.com'}
+                className="group relative pl-8 pr-2 py-2 bg-white text-black rounded-full font-semibold text-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              >
                 Hire Me
                 <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center group-hover:-rotate-45 transition-transform duration-300">
                   <ArrowRight className="w-5 h-5 text-white" />
