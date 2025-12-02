@@ -249,12 +249,14 @@ const MainPage = () => {
                   Whether you need a new app built from scratch or want to improve an existing one, I bring both technical depth and business understanding.
                 </p>
 
-                <div className="pt-4 flex items-center gap-2">
-                  <span className="text-xl">📩</span>
-                  <span className="font-medium text-white">Let’s collaborate to bring your app idea to life. Email:</span>
-                  <a href="mailto:vikramchaudhary.dev@gmail.com" className="text-primary hover:text-secondary transition-colors font-medium">
-                    vikramchaudhary.dev@gmail.com
-                  </a>
+                <div className="pt-4">
+                  <p className="font-medium text-white leading-relaxed">
+                    <span className="text-xl mr-2 align-middle">📩</span>
+                    Let’s collaborate to bring your app idea to life. Email:{" "}
+                    <a href="mailto:vikramchaudhary.dev@gmail.com" className="text-primary hover:text-secondary transition-colors font-bold inline-block border-b border-primary/30 hover:border-secondary">
+                      vikramchaudhary.dev@gmail.com
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
