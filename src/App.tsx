@@ -8,6 +8,7 @@ import BlogDetail from './BlogDetail';
 import Header from './components/Header';
 import Background from './components/Background';
 import Work from './Work';
+import PrivacyPolicy from './PrivacyPolicy';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import { useEffect } from "react";
 import vikramImage from './assets/vikram.jpg';
@@ -305,6 +306,7 @@ const App = () => {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
         <Route path="/swiftui-architecture" element={<SwiftUIArchitectureExplorer />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </Router>
   );
