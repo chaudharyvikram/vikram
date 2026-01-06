@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -8,20 +8,7 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-screen bg-background text-white">
-      {/* Simple back link instead of full header */}
-      <div className="max-w-4xl mx-auto px-6 pt-8">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          Back to Home
-        </Link>
-      </div>
-
-      <main className="relative z-10 max-w-4xl mx-auto px-6 pb-24">
+      <main className="relative z-10 max-w-4xl mx-auto px-6 py-12">
         <div className="bg-surface/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
             Privacy Policy
@@ -165,9 +152,7 @@ const PrivacyPolicy = () => {
         </div>
       </main>
 
-      <footer className="py-12 text-center text-gray-600 text-sm">
-        <p>&copy; {new Date().getFullYear()} Vikram Chaudhary.</p>
-      </footer>
+
     </div>
   );
 };
