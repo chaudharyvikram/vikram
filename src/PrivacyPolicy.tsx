@@ -141,10 +141,10 @@ const PrivacyPolicy = () => {
               <p>
                 <strong className="text-white">Email:</strong>{' '}
                 <a
-                  href="mailto:support@subvera.app"
+                  href="mailto:gk@vgdtechnologies.com"
                   className="text-primary hover:text-secondary transition-colors underline"
                 >
-                  support@subvera.app
+                  gk@vgdtechnologies.com
                 </a>
               </p>
             </section>
