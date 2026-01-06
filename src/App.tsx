@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import FeaturedProjectCard from './components/FeaturedProjectCard';
 import { projects } from './data/projects';
