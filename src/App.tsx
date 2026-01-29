@@ -119,7 +119,7 @@ const MainPage = () => {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wider">App Store</p>
-                    <p className="text-lg font-bold text-white">20+ Apps</p>
+                    <p className="text-lg font-bold text-white">50+ Apps</p>
                   </div>
                 </div>
               </div>
@@ -229,7 +229,7 @@ const MainPage = () => {
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <span className="text-xl mt-0.5">✅</span>
-                      <span>20+ apps published on App Store & Play Store</span>
+                      <span>50+ apps published on App Store & Play Store</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-xl mt-0.5">🌎</span>
