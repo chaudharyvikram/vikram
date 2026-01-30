@@ -79,6 +79,15 @@ const MainPage = () => {
                   <ArrowRight className="w-5 h-5 text-white" />
                 </div>
               </button>
+              <button
+                onClick={() => window.open('https://www.upwork.com/freelancers/vikramchaudhary', '_blank')}
+                className="group relative pl-8 pr-2 py-2 bg-transparent border-2 border-white/20 text-white rounded-full font-semibold text-lg hover:scale-105 hover:border-primary transition-all duration-300 flex items-center gap-3 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              >
+                View Upwork
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:-rotate-45 transition-transform duration-300">
+                  <ArrowRight className="w-5 h-5 text-white" />
+                </div>
+              </button>
             </div>
           </div>
 

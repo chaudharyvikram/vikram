@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Smartphone } from 'lucide-react';
 
 interface FeaturedProjectProps {
     title: string;
@@ -7,16 +7,14 @@ interface FeaturedProjectProps {
     description: string;
     tags: string[];
     image: string;
-    link: string;
+    link?: string;
+    playStoreLink?: string;
     color: string;
 }
 
-const FeaturedProjectCard: React.FC<FeaturedProjectProps> = ({ title, category = "iOS App", description, tags, image, link, color }) => {
+const FeaturedProjectCard: React.FC<FeaturedProjectProps> = ({ title, category = "iOS App", description, tags, image, link, playStoreLink, color }) => {
     return (
-        <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
+        <div
             className={`block relative overflow-hidden rounded-[2rem] bg-surface/30 backdrop-blur-xl border border-white/5 p-5 group hover:border-white/10 transition-colors duration-500`}
         >
             {/* Gradient Glow Effect */}
@@ -36,9 +34,33 @@ const FeaturedProjectCard: React.FC<FeaturedProjectProps> = ({ title, category =
                         </p>
                     </div>
 
-                    <div className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:text-white transition-colors pt-1">
-                        View on App Store
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex flex-wrap gap-4 pt-1">
+                        {link && (
+                            <a
+                                href={link}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-white transition-colors"
+                            >
+                                App Store
+                                <ArrowRight className="w-4 h-4 translate-x-0 group-hover/link:translate-x-1 transition-transform" />
+                            </a>
+                        )}
+
+                        {playStoreLink && (
+                            <>
+                                {link && <span className="text-white/20">|</span>}
+                                <a
+                                    href={playStoreLink}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-2 text-sm font-semibold text-green-500 hover:text-white transition-colors"
+                                >
+                                    Play Store
+                                    <ArrowRight className="w-4 h-4 translate-x-0 group-hover/link:translate-x-1 transition-transform" />
+                                </a>
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -53,7 +75,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectProps> = ({ title, category =
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     );
 };
 
